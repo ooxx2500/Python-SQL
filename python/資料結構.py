@@ -4,17 +4,19 @@ Created on Thu May 21 09:23:25 2020
 
 @author: ASUS
 """
+
+
 '''
-
-
 
 1.串列:List(資料容器) 由一連串資料組成(等同於陣列)，可存放不同型態的資料，
       以中誇號前後誇住資料[]，可以建構為多維串列(一維,二維....)
   一維串列:串列資料取得:串列名稱[索引值(從0開始)]
          串列名稱[起始:終止]:起始列終止-1的元素 
-         
+    建立:[元素1,元素2......]元素建立後即有所引值，索引值從0開始
+     
   len()函式:求串列的長度(元素個數)
-  append(value):加入元素，將value加入串列尾短         
+  append(value):加入元素，將value加入串列尾端，元素可以為一般的資料(也可以是串列)
+  extend(value):加入元素，但只能放入串列      
   insert(index,value):加入元素在指定的索引處        
   pop():移除串列最後一個元素，可以用變數取出來
   pop(index):移除串列指定所引值得元素，可以用變數取出來
@@ -31,7 +33,22 @@ Created on Thu May 21 09:23:25 2020
   * :複製串列
   
     
-2.元祖(數組):tuple 與串列LIST相似，不同如下
+2.元祖(數組):
+    建立:元祖名稱=(元素1,元素2....)，元素個數元素名稱不可以改變，其他與串列相同
+        所以不能使用append(),insert()
+ 
+    ----元祖VS串列-----
+    串列功能比元強大
+    元組比串列安全，不能更改
+    元組執行數度快
+    -----------------
+    應用:串列與元祖互相轉換 
+    元組轉串列 tuple1 = (1,2,3)  
+             list1 = [tuple1]     
+    串列轉元祖 list2 = [3,2,1]
+             tuple2 = (list2)
+      
+    tuple 與串列LIST相似，不同如下
     1.tuple內元素值不可改變
     2.無法刪除個別元素、無法取代個別元素
     3.以小()建立元祖
@@ -54,20 +71,32 @@ Created on Thu May 21 09:23:25 2020
     
     
 
-4.字典:dict 以大誇號{:}建立，資料鍵值(key)及值(value)組成 
+4.字典:dict 
+    以大誇號{:}建立，資料鍵值(key)及值(value)組成 
     格式 {key:value , key2:value2......}   中間用冒號隔開
-    刪除資料 del 字典[key]
+    字典元素無一定的順序排列(串列元素則依序排列)--記憶體位置
+    字典取值得方式:字典名稱[key] 會出來value,字典以key為索引取得value
+    Key值必須唯一，value可以重複
+    如果加入重複的key不會出現錯誤，會以後面新增的覆蓋過去
+    如果KEY不存在會產生錯誤，所以可以用get()，若無KEY則得到None
+    
+    3種建立方式
+    字典名稱 = {key1:value1 , key2:value2.......}
+    字典名稱 = dict([key1:value1],[key2:value2].......)
+    字典名稱 = dict(key1=value2,key2=value2........)---此方法KEY不能是數字
+    
+    
+    del 刪除資料 del 字典[key]
+    clear() 刪除字典所有元素 字典名稱.clear()
+    del 字典名稱  直接刪除整個字典
     keys()列出該字典所有的key值
     values()列出所有的Values值
     items()列出項目值
     tuple(dict1.items()) 不會出現原本的名稱
     copy()複製
     update()合併字典，若有相同的key值只取一個key(合併的那個欄位)
-    get(key) 傳回值
+    get(key) 傳回值，如果無KEY不會產生錯誤
     setdefault(key,value) 若沒有Key建立一組key:value,若已經有KEY則回傳原本的值
-
-
-
 
 '''
 ---------------------------------------------------------
@@ -392,8 +421,40 @@ dict4
 dict4.update(dict3)  #合併
 dict4
 
+---------------------------------------------
+#get()
+fruit = {'蘋果':15 , '香蕉':10,'番茄':12}
+print(fruit.get('蘋果'))
+print(fruit.get('鳳梨'))
 
-------------------------------------
+-----------------------------------------------
+#字典找血型
+
+dict1 = {'A':'內向穩重','B':'外向樂觀','D':'堅強自信','AB':'聰明自然'}
+name = input("輸入血型")
+blood = dict1.get(name)
+if blood==None:
+    print("沒有%s血型"%name)
+else:
+    print("%s血型的個性為%s" %(name, str(dict1[name])))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------
 題目:宣告一整數串列(大小為5 5個元素)
 傳遞給output(aList)函式
 函式由輸入初始化後
@@ -411,21 +472,32 @@ a = [random.randint(1,100) for x in range(5)]
 print(a)
 
 
-def aList(lis):
-    maxnum = lis[0]
-    minnum = lis[0]
-    for i in lis:
+def output(alist):
+    maxnum = alist[0]
+    minnum = alist[0]
+    for i in alist:
         if i >= maxnum:
             maxnum = i
             
-    for i in lis:
+    for i in alist:
         if i <= minnum:
             minnum = i
     return print("最大值是:%2d 最小值是:%2d" %(maxnum, minnum) )
             
-            
-            
-aList(a)
+output(a)
+--------------------------------------------------
+
+dict1 = {"林美麗":85,"王大同":93,"李大年":67}
+name = input("請輸入姓名")      
+#name =input("請輸入姓名")
+if name in dict1:
+    print( name+"的成績為"+str(dict1[name]))
+    
+else:
+    score = input("請輸入成績:")
+    dict1[name]=score
+    print('字典內容'+str(dict1))
+
 
 
 
